@@ -3,3 +3,4 @@ package-lock.json
 .next
 details.txt
 yarn.lock
+/.env
