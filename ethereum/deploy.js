@@ -3,8 +3,8 @@ const Web3 = require("web3");
 const compiledFactory = require('./build/Certificate.json');
 
 const provider = new HDWalletProvider(
-  process.env.METAMASK_NEUMONIC, //Paste your metamask neumonic here
-  process.env.INFURA_KEY   //Paste your infura API here
+  '', //Paste your metamask neumonic here
+  ''   //Paste your infura API here
 );
 
 const web3 = new Web3(provider);

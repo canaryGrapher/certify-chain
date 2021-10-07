@@ -11,7 +11,7 @@ const certificatePath = path.resolve(__dirname, 'contracts', 'Certificate.sol');
 const source = fs.readFileSync(certificatePath, 'utf8');
 
 //3. Compile the contracts
-// console.log(solc.compile(source, 1));
+console.log(solc.compile(source, 1));
 const output = solc.compile(source, 1).contracts;
 
 //Create a folder according to buildPath
