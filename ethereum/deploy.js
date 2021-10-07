@@ -3,8 +3,8 @@ const Web3 = require("web3");
 const compiledFactory = require('./build/Certificate.json');
 
 const provider = new HDWalletProvider(
-  '', //Paste your metamask neumonic here
-  ''   //Paste your infura API here
+  process.env.METAMASK_NEUMONIC, //Paste your metamask neumonic here
+  process.env.INFURA_KEY   //Paste your infura API here
 );
 
 const web3 = new Web3(provider);
@@ -14,8 +14,8 @@ const deploy = async () => {
   console.log("Attempting to deploy from account", accounts[0]);
 
   const result = await new web3.eth.Contract(JSON.parse(compiledFactory.interface))
-    .deploy({ data: compiledFactory.bytecode , arguments: ['MAHE']})
-    .send({gas: '1000000', gasPrice: '5000000000', from: accounts[0]});
+    .deploy({ data: compiledFactory.bytecode, arguments: ['MAHE'] })
+    .send({ gas: '1000000', gasPrice: '5000000000', from: accounts[0] });
 
   console.log("Contract deployed to", result.options.address);
 };

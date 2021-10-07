@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import certificate from '../ethereum/certificate_instance';
 import web3 from '../ethereum/web3';
+
+import { getAdminDetails } from "../utilities/admin"
 
 //importing components
 import User from '../components/user/User'
@@ -16,7 +17,7 @@ const Main = (props) => {
         <div className="text-center bg-black w-screen h-screen text-white flex flex-col justify-center">
             <h1 className="text-3xl text-red-300">{name}</h1>
             {
-                userWallet === props.adminAddress ? <Admin address={props.adminAddress} name={props.adminName} /> : <User address={userWallet} />
+                userWallet != props.adminAddress ? <Admin address={props.adminAddress} name={props.adminName} /> : <User address={userWallet} />
             }
         </div>
     );
@@ -26,8 +27,9 @@ const Main = (props) => {
 export default Main;
 
 export async function getStaticProps() {
-    const adminName = await certificate.methods.adminName().call();
-    const adminAddress = await certificate.methods.admin().call();
+    const adminDetails = await getAdminDetails();
+    const adminName = await adminDetails.name;
+    const adminAddress = await adminDetails.address;
     return {
         props: { adminName, adminAddress }, // will be passed to the page component as props
     }
