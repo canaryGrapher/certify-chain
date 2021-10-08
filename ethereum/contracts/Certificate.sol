@@ -1,6 +1,7 @@
 pragma solidity ^0.4.26;
 
 contract Certificate {
+
     struct Cert {
         bytes32 hashValue;
         bool isValid;
@@ -27,7 +28,7 @@ contract Certificate {
         string _adminName,
         string dateOfIssue,
         string description
-    ) public restricted {
+    ) public {
         bytes32 _hashValue = keccak256(
             abi.encodePacked(
                 certificateId,
@@ -73,20 +74,11 @@ contract Certificate {
         ledger[certificateId].isValid = false;
     }
 
-    function certificateStatus(string certificateId)
-        public
-        view
-        returns (bool)
-    {
+    function certificateStatus(string certificateId) public view returns (bool) {
         return ledger[certificateId].isValid;
     }
 
-    function getAdminDetails()
-        public
-        view
-        restricted
-        returns (address, string)
-    {
+    function getAdminDetails() public view returns (address, string) {
         return (admin, adminName);
     }
 }

@@ -81,6 +81,15 @@ describe('Certificate', () => {
 
         assert(status1 && status2);
     });
+
+    it('gets admin', async () => {
+        try{
+            const details = await certificate.methods.getAdminDetails().call();
+            console.log(details);
+        } catch(err){
+
+        }
+    });
 });
 
 

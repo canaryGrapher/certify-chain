@@ -1,12 +1,11 @@
 import certificate from '../ethereum/certificate_instance';
-// import web3 from '../ethereum/web3';
 
 
 const getAdminDetails = async () => {
-    const adminAddress = await certificate.methods.getAdminDetails();
-    return adminAddress
+    const adminAddress = await certificate.methods.getAdminDetails().call();
+    // console.log("Returns: ", adminAddress);
+    return adminAddress;
 };
-
 
 
 export { getAdminDetails };
