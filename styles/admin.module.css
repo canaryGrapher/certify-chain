@@ -1,0 +1,23 @@
+.tab {
+    background-color: #71767a;
+    box-sizing      : border-box;
+    cursor          : pointer;
+}
+
+.tab:first-of-type {
+    border-radius: 20px 0 0 0;
+}
+
+.tab:last-of-type {
+    border-radius: 0 20px 0 0;
+}
+
+.active_tab {
+    box-shadow: inset 5px 5px 10px #3f3f3f,
+        inset -5px -5px 10px #71767a;
+    color: #fafafa;
+}
+
+.inactive_tab {
+    box-shadow: 5px 5px 10px #3f3f3f;
+}
