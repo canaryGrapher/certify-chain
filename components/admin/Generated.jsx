@@ -29,7 +29,7 @@ const Generated = () => {
     <React.Fragment>
       <h2 className="text-2xl font-medium">Issued Certificates</h2>
       {info.length != 0 ? (
-        info.map((info, index) => <CertificateCards key={index} info={info} />)
+        info.map((info, index) => <CertificateCards key={index} {...info} />)
       ) : (
         <div className="text-lg h-32 flex flex-col justify-center text-center">
           No certificates issued yet
