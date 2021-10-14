@@ -42,21 +42,15 @@ const User = () => {
   const [userName, setUserName] = React.useState("");
 
   React.useEffect(() => {
-    web3.eth.getAccounts().then((res) => {
-      const displayAddress = res[0].slice(0, 6) + ".." + res[0].slice(-5);
-      setUserWallet(displayAddress);
-      fetchUtil(userWallet);
-    });
-
-    const fetchUtil = async(wallet) => {
-      console.log(wallet);
-      const details = await fetchUserDetails(wallet);
-      console.log(details);
-      setRegNo(details.regNo);
-      setUserName(details.name);
-    }
-
-    
+    const fetchUtil = async () => {
+      const wallet = await web3.eth.getAccounts();
+      // const displayAddress = wallet[0].slice(0, 6) + ".." + wallet[0].slice(-5);
+      setUserWallet(wallet[0]);
+      const data = await fetchUserDetails(wallet[0]);
+      setRegNo(data.regNo);
+      setUserName(data.name);
+    };
+    fetchUtil();
   }, []);
 
   return (
