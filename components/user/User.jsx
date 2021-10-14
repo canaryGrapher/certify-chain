@@ -29,24 +29,21 @@ const info = [
 
 const fetchUserDetails = async (userWallet) => {
   const url = `/api/user/?walletAddress=${userWallet}`;
-  console.log(url);
-  fetch(url).then((details) => {
-    console.log(details.body);
-  });
-  
-}
+
+  const details = await fetch(url);
+
+  console.log(await details.json());
+};
 
 const User = () => {
-  const [userWallet, setUserWallet] = React.useState('');
+  const [userWallet, setUserWallet] = React.useState("");
   React.useEffect(() => {
     web3.eth.getAccounts().then((res) => {
-      const displayAddress = res[0].slice(0, 6) + '..' + res[0].slice(-5);
+      const displayAddress = res[0].slice(0, 6) + ".." + res[0].slice(-5);
       setUserWallet(displayAddress);
       fetchUserDetails(res[0]);
     });
-
-    
-  },[]);
+  }, []);
 
   return (
     <React.Fragment>
