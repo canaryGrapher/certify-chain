@@ -44,7 +44,7 @@ const User = () => {
   React.useEffect(() => {
     const fetchUtil = async () => {
       const wallet = await web3.eth.getAccounts();
-      // const displayAddress = wallet[0].slice(0, 6) + ".." + wallet[0].slice(-5);
+      // const displayAddress = ;
       setUserWallet(wallet[0]);
       const data = await fetchUserDetails(wallet[0]);
       setRegNo(data.regNo);
@@ -56,6 +56,7 @@ const User = () => {
   return (
     <React.Fragment>
       <h1 className="text-3xl">{userName}</h1>
+      <p className="text-lg text-gray-400">{userWallet.slice(0, 6) + ".." + userWallet.slice(-5)}</p>
       <p>{regNo}</p>
       <div className="mt-10">
         {info.map((item) => (
