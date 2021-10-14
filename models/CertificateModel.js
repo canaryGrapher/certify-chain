@@ -26,6 +26,11 @@ const CertificateSchema = new mongoose.Schema(
             trim: true,
             required: [true, "Please add a description"],
         },
+        organization: {
+            type: String,
+            trim: true,
+            required: [true, "Please add an organization"],
+        }
     },
     { collection: "certificate" }
 );

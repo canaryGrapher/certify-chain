@@ -1,9 +1,45 @@
 import React from "react";
+import web3 from "../../ethereum/web3";
 
-//importinf sttylesheets
+//importinf stylesheets
 import homestyles from "../../styles/home.module.css";
 
 const Generate = () => {
+  const [name, setName] = React.useState("");
+  const [regNo, setRegNo] = React.useState("");
+  const [issueDate, setIssueDate] = React.useState("");
+  const [organization, setOrganization] = React.useState("");
+  const [description, setDescription] = React.useState("");
+
+  const submitCertificate = async () => {
+    // regNo, studentName, dateOfIssue, description, walletAddress
+    const wallet = await web3.eth.getAccounts();
+    const data = {
+      studentName: name,
+      regNo: regNo,
+      dateOfIssue: issueDate,
+      description: description,
+      organization: organization,
+      walletAddress: wallet[0],
+    };
+    const dataSubmit = await fetch(`/api/certificate`, {
+      method: "POST",
+      body: JSON.stringify({
+        studentName: name,
+        regNo: regNo,
+        dateOfIssue: issueDate,
+        description: description,
+        organization: organization,
+        walletAddress: wallet[0],
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const response = await dataSubmit.json();
+    console.log(response);
+  };
+
   return (
     <React.Fragment>
       <h2 className="text-2xl font-medium">Issue a new certificate</h2>
@@ -14,6 +50,8 @@ const Generate = () => {
             type="text"
             placeholder="Name"
             className={`w-full mx-auto h-12 p-5 border-2 ${homestyles.input}`}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
         <div className="my-2 w-full">
@@ -22,6 +60,8 @@ const Generate = () => {
             type="number"
             placeholder="Registration number of the user"
             className={`w-full mx-auto h-12 p-5 border-2 ${homestyles.input}`}
+            value={regNo}
+            onChange={(e) => setRegNo(e.target.value)}
           />
         </div>
       </div>
@@ -32,6 +72,8 @@ const Generate = () => {
             type="date"
             placeholder="Date of issue of certificate"
             className={`w-full mx-auto h-12 p-5 border-2 ${homestyles.input}`}
+            value={issueDate}
+            onChange={(e) => setIssueDate(e.target.value)}
           />
         </div>
         <div className="my-2 w-full">
@@ -40,6 +82,8 @@ const Generate = () => {
             type="text"
             placeholder="Name of issuing organization"
             className={`w-full mx-auto h-12 p-5 border-2 ${homestyles.input}`}
+            value={organization}
+            onChange={(e) => setOrganization(e.target.value)}
           />
         </div>
       </div>
@@ -50,10 +94,13 @@ const Generate = () => {
           rows={5}
           placeholder="About the certificate"
           className={`w-full mx-auto h-12 p-5 border-2 ${homestyles.textarea}`}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         ></textarea>
       </div>
       <button
         className={`${homestyles.button} mx-auto w-full border-2 bg-green-400 border-green-400 hover:text-black hover:bg-white text-white`}
+        onClick={() => submitCertificate()}
       >
         Issue Certificate
       </button>
