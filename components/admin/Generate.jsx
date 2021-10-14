@@ -1,5 +1,7 @@
 import React from "react";
 import web3 from "../../ethereum/web3";
+import { v4 as uuid_v4 } from "uuid";
+import { createCertificate } from '../../utilities/admin';
 
 //importinf stylesheets
 import homestyles from "../../styles/home.module.css";
@@ -11,33 +13,36 @@ const Generate = () => {
   const [organization, setOrganization] = React.useState("");
   const [description, setDescription] = React.useState("");
 
+
   const submitCertificate = async () => {
-    // regNo, studentName, dateOfIssue, description, walletAddress
+    const certificateId = uuid_v4();
+    const status = await createCertificate(certificateId, regNo, name, organization, issueDate, description);
     const wallet = await web3.eth.getAccounts();
-    const data = {
-      studentName: name,
-      regNo: regNo,
-      dateOfIssue: issueDate,
-      description: description,
-      organization: organization,
-      walletAddress: wallet[0],
-    };
-    const dataSubmit = await fetch(`/api/certificate`, {
-      method: "POST",
-      body: JSON.stringify({
-        studentName: name,
-        regNo: regNo,
-        dateOfIssue: issueDate,
-        description: description,
-        organization: organization,
-        walletAddress: wallet[0],
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const response = await dataSubmit.json();
-    console.log(response);
+
+    if(status === true) {
+      const dataSubmit = await fetch(`/api/certificate`, {
+        method: "POST",
+        body: JSON.stringify({
+          studentName: name,
+          regNo: regNo,
+          dateOfIssue: issueDate,
+          description: description,
+          organization: organization,
+          walletAddress: wallet[0],
+          certificateId: certificateId,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const response = await dataSubmit.json();
+      console.log(response);
+    } 
+    else{
+      //Show error message indicating error due to web3/metamask
+      console.log("The certificate could not be generated!!");
+    }
+    
   };
 
   return (

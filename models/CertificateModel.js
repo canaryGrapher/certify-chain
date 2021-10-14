@@ -30,6 +30,10 @@ const CertificateSchema = new mongoose.Schema(
             type: String,
             trim: true,
             required: [true, "Please add an organization"],
+        },
+        certificateId: {
+            type: String,
+            required: [true, "Please add a unique id"],
         }
     },
     { collection: "certificate" }

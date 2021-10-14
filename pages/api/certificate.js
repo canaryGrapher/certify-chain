@@ -49,7 +49,7 @@ export default async function handler(req, res) {
     // funtion to create a new certificate
     else if (method === "POST") {
         try {
-            const { regNo, studentName, dateOfIssue, description, organization, walletAddress } = req.body;
+            const { regNo, studentName, dateOfIssue, description, organization, walletAddress, certificateId } = req.body;
 
             // check if the user is an admin
             const user = await User.findOne({ walletAddress });
@@ -62,7 +62,8 @@ export default async function handler(req, res) {
                     adminAddress: walletAddress,
                     dateOfIssue: dateOfIssue,
                     description: description,
-                    organization: organization
+                    organization: organization,
+                    certificateId: certificateId
                 });
 
                 await certificate.save();
