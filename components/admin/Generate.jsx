@@ -12,7 +12,6 @@ const Generate = () => {
   const [issueDate, setIssueDate] = React.useState("");
   const [organization, setOrganization] = React.useState("");
   const [description, setDescription] = React.useState("");
-  const [certificateId, setCertificateId] = React.useState("");
 
   const submitCertificate = async () => {
     const certificateId = uuid_v4();
@@ -53,16 +52,6 @@ const Generate = () => {
   return (
     <React.Fragment>
       <h2 className="text-2xl font-medium">Issue a new certificate</h2>
-      <div className="my-2 w-full">
-        <p className="mb-2 ml-3">Certificate ID</p>
-        <input
-          type="text"
-          placeholder="Certificate ID"
-          className={`w-full mx-auto h-12 p-5 border-2 ${homestyles.input}`}
-          value={certificateId}
-          onChange={(e) => setCertificateId(e.target.value)}
-        />
-      </div>
       <div className="grid grid-cols-2 gap-5">
         <div className="my-2 w-full">
           <p className="mb-2 ml-3">Name of the user</p>
