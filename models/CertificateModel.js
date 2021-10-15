@@ -33,6 +33,7 @@ const CertificateSchema = new mongoose.Schema(
         },
         certificateId: {
             type: String,
+            trim: true,
             required: [true, "Please add a unique id"],
         }
     },

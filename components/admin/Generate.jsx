@@ -1,7 +1,7 @@
 import React from "react";
 import web3 from "../../ethereum/web3";
 import { v4 as uuid_v4 } from "uuid";
-import { createCertificate } from '../../utilities/admin';
+import { createCertificate } from "../../utilities/admin";
 
 //importinf stylesheets
 import homestyles from "../../styles/home.module.css";
@@ -12,14 +12,21 @@ const Generate = () => {
   const [issueDate, setIssueDate] = React.useState("");
   const [organization, setOrganization] = React.useState("");
   const [description, setDescription] = React.useState("");
-
+  const [certificateId, setCertificateId] = React.useState("");
 
   const submitCertificate = async () => {
     const certificateId = uuid_v4();
-    const status = await createCertificate(certificateId, regNo, name, organization, issueDate, description);
+    const status = await createCertificate(
+      certificateId,
+      regNo,
+      name,
+      organization,
+      issueDate,
+      description
+    );
     const wallet = await web3.eth.getAccounts();
 
-    if(status === true) {
+    if (status === true) {
       const dataSubmit = await fetch(`/api/certificate`, {
         method: "POST",
         body: JSON.stringify({
@@ -37,17 +44,25 @@ const Generate = () => {
       });
       const response = await dataSubmit.json();
       console.log(response);
-    } 
-    else{
+    } else {
       //Show error message indicating error due to web3/metamask
       console.log("The certificate could not be generated!!");
     }
-    
   };
 
   return (
     <React.Fragment>
       <h2 className="text-2xl font-medium">Issue a new certificate</h2>
+      <div className="my-2 w-full">
+        <p className="mb-2 ml-3">Certificate ID</p>
+        <input
+          type="text"
+          placeholder="Certificate ID"
+          className={`w-full mx-auto h-12 p-5 border-2 ${homestyles.input}`}
+          value={certificateId}
+          onChange={(e) => setCertificateId(e.target.value)}
+        />
+      </div>
       <div className="grid grid-cols-2 gap-5">
         <div className="my-2 w-full">
           <p className="mb-2 ml-3">Name of the user</p>
