@@ -9,11 +9,11 @@ const CertificateComponent = (props) => (
     <div className="flex flex-row justify-between w-full my-5">
       <p>
         <span className="font-bold">Certificate ID: </span>
-        {props.id}
+        {props.certificateId}
       </p>
       <p>
         <span className="font-bold">Issue date: </span>
-        {props.date}
+        {props.dateOfIssue}
       </p>
     </div>
     <div className="flex flex-row justify-between w-full my-5">

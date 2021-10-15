@@ -4,29 +4,6 @@ import web3 from "../../ethereum/web3";
 //importing components
 import CertificateComponent from "./CertificateComponent";
 
-const info = [
-  {
-    description: "This certificate is valid for the following domains:",
-    date: "01/01/2020",
-    id: "HD73DJ0",
-  },
-  {
-    description: "This certificate is valid for the following domains:",
-    date: "01/01/2021",
-    id: "HD73DJ0",
-  },
-  {
-    description: "This certificate is valid for the following domains:",
-    date: "01/01/2022",
-    id: "HD73DJ0",
-  },
-  {
-    description: "This certificate is valid for the following domains:",
-    date: "01/01/2023",
-    id: "HD73DJ0",
-  },
-];
-
 const fetchUserDetails = async (userWallet) => {
   const url = `/api/user/?walletAddress=${userWallet}`;
 
@@ -36,19 +13,29 @@ const fetchUserDetails = async (userWallet) => {
   return details.data;
 };
 
+const fetchUserCertificates = async(walletAddress) => {
+  const response = await fetch(`/api/certificate/?walletAddress=${walletAddress}&type=owned`);
+  const data = await response.json();
+  console.log(data.message);
+  return data.message;
+}
+
 const User = () => {
   const [userWallet, setUserWallet] = React.useState("");
   const [regNo, setRegNo] = React.useState("");
   const [userName, setUserName] = React.useState("");
+  const [info, setInfo] = React.useState([]);
 
   React.useEffect(() => {
     const fetchUtil = async () => {
       const wallet = await web3.eth.getAccounts();
-      // const displayAddress = ;
       setUserWallet(wallet[0]);
       const data = await fetchUserDetails(wallet[0]);
       setRegNo(data.regNo);
       setUserName(data.name);
+
+      const userCertificates = await fetchUserCertificates(wallet[0]);
+      setInfo(userCertificates);
     };
     fetchUtil();
   }, []);
