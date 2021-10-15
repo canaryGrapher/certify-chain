@@ -3,3 +3,5 @@
 2) Error handling for database and web3 calls
 
 3) Adding naviagation buttons
+
+4) Add no certificate thingy in the home page
