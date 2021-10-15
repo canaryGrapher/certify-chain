@@ -1,30 +1,22 @@
 import React from "react";
 import CertificateCards from "./CertificateCards";
+import web3 from "../../ethereum/web3";
 
-const info = [
-  {
-    description: "This certificate is valid for the following domains:",
-    regno: "123456789",
-    date: "01/01/2020",
-  },
-  {
-    description: "This certificate is valid for the following domains:",
-    regno: "123456789",
-    date: "01/01/2021",
-  },
-  {
-    description: "This certificate is valid for the following domains:",
-    regno: "123456789",
-    date: "01/01/2022",
-  },
-  {
-    description: "This certificate is valid for the following domains:",
-    regno: "123456789",
-    date: "01/01/2023",
-  },
-];
+const Generated =  () => {
+  const [info, setInfo] = React.useState([]);
 
-const Generated = () => {
+  React.useEffect(() => {
+    const fetchCertificates = async() => {
+      const accounts = await web3.eth.getAccounts();
+      const response = await fetch(`/api/certificate/?walletAddress=${accounts[0]}&type=admin`);
+      const data = await response.json();
+      console.log(data.message);
+      setInfo(data.message);
+    };
+
+    fetchCertificates();
+  }, []);
+
   return (
     <React.Fragment>
       <h2 className="text-2xl font-medium">Issued Certificates</h2>

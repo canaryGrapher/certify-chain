@@ -6,8 +6,8 @@ import styles from "./styles/CertificateCards.module.css";
 const CertificateCards = (props) => (
   <div className={`bg-gray-100 w-100 my-5 p-5 rounded-lg ${styles.cards}`}>
     <div className="flex flex-row justify-between my-4 text-xl">
-      <p className="font-medium">{props.regno}</p>
-      <p className="font-medium">{props.date}</p>
+      <p className="font-medium">{props.regNo}</p>
+      <p className="font-medium">{props.dateOfIssue}</p>
     </div>
     <p>{props.description}</p>
     <div className="flex flex-row justify-between mt-4">
