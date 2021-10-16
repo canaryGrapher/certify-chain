@@ -1,5 +1,0 @@
-1) Adding restriction to admin pages for ordinary users
-
-2) Error handling for database and web3 calls
-
-3) Adding naviagation buttons
