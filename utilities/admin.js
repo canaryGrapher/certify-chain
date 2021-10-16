@@ -7,6 +7,8 @@ const getAdminDetails = async () => {
 };
 
 const revokeCertificate = async (certificateId) => {
+    const accounts = await web3.eth.getAccounts();
+    
     //Revoke certificate with id as certificateID
     await certificate.methods.revoke(certificateId).send({from: accounts[0]});
 
@@ -20,6 +22,7 @@ const revokeCertificate = async (certificateId) => {
 
 //Returns true if the certificate is created successfully
 const createCertificate = async (certificateId, regNo, studentName, adminName, dateOfIssue, description) => {
+    const accounts = await web3.eth.getAccounts();
     await certificate.methods.createCertificate(certificateId, regNo, studentName, adminName, dateOfIssue, description)
             .send({from: accounts[0]});
 

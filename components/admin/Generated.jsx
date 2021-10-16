@@ -12,6 +12,8 @@ const Generated =  () => {
       const data = await response.json();
       console.log(data.message);
       setInfo(data.message);
+      console.log(typeof info);
+      console.log(info.length);
     };
 
     fetchCertificates();
@@ -20,7 +22,7 @@ const Generated =  () => {
   return (
     <React.Fragment>
       <h2 className="text-2xl font-medium">Issued Certificates</h2>
-      {info.length != 0 ? (
+      {(info && info.length != 0) ? (
         info.map((info, index) => <CertificateCards key={index} {...info} />)
       ) : (
         <div className="text-lg h-32 flex flex-col justify-center text-center">
