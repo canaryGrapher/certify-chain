@@ -8,8 +8,6 @@ import styles from '../styles/home.module.css';
 
 const Verify = () => {
     // const [userWallet, setUserWallet] = React.useState('');
-    // web3.eth.getAccounts().then((res) => {
-    //     setUserWallet(res[0]);
     // });
     return (
         <React.Fragment>

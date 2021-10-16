@@ -53,7 +53,6 @@ export default async function handler(req, res) {
 
             // check if the user is an admin
             const user = await User.findOne({ walletAddress });
-            console.log(user)
 
             if (user.admin) {
                 const certificate = new Certificate({
@@ -63,7 +62,7 @@ export default async function handler(req, res) {
                     dateOfIssue: dateOfIssue,
                     description: description,
                     organization: organization,
-                    certificateId:certificateId
+                    certificateId: certificateId
                 });
 
                 await certificate.save();
@@ -80,14 +79,14 @@ export default async function handler(req, res) {
             res.status(500).json({ success: false, message: error });
         }
     }
-    else if(method === "DELETE"){
-        const { certificateId} = req.query;
-        const certificate = await Certificate.findOne({certificateId});
-        if(certificate){
+    else if (method === "DELETE") {
+        const { certificateId } = req.query;
+        const certificate = await Certificate.findOne({ certificateId });
+        if (certificate) {
             await certificate.remove();
             res.status(200).json({ success: true, message: "Certificate deleted!" });
         }
-        else{
+        else {
             console.log("Certificate doesnt exist");
             res.status(204).json({ success: false, message: "Certificate doesnt exist" });
         }
