@@ -14,11 +14,18 @@ const Generate = () => {
   const [description, setDescription] = React.useState("");
   const [loading, setLoading] = React.useState(false);
 
+  const clearFields = () => {
+    setName("");
+    setRegNo("");
+    setIssueDate("");
+    setOrganization("");
+    setDescription("");
+  };
+
   const submitCertificate = async (e) => {
     e.preventDefault();
     setLoading(true);
     const certificateId = uuid_v4();
-
     try {
       const status = await createCertificate(
         certificateId,
@@ -49,18 +56,17 @@ const Generate = () => {
         });
         const response = await dataSubmit.json();
         console.log(response);
+        clearFields();
         setLoading(false);
       } else {
         //Show error message indicating error due to web3/metamask
         alert("The certificate could not be generated!!");
       }
-      
     } catch (err) {
-        alert(err.message);
-        console.log(err);
+      alert(err.message);
+      console.log(err);
     }
     setLoading(false);
-
   };
 
   return (
