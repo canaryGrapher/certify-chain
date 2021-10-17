@@ -5,7 +5,7 @@ import certificate from './build/Certificate.json';
 
 const instance = new web3.eth.Contract(
     JSON.parse(certificate.interface),
-    '0x612F8Dc2fDCfC3c8f4AcB684436ae7B5D0EeeADB'      //Paste the address of the deployed contract here
+    '0xd8c6b3C5eec446E7a7E2C4390fD52E00d1099c9F'      //Paste the address of the deployed contract here
 );
 
 export default instance;

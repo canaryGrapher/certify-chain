@@ -8,33 +8,37 @@ contract Certificate {
     }
 
     mapping(string => Cert) ledger;
-    address public admin;
-    string public adminName;
+    mapping(address => bool) public adminMap;
+    address[] public adminLedger;
+    address public adminMaster;
+    string public orgName;
 
     modifier restricted() {
-        require(msg.sender == admin);
+        require(adminMap[msg.sender] == true);
         _;
     }
 
-    constructor(string _adminName) public {
-        admin = msg.sender;
-        adminName = _adminName;
+    constructor(string _orgName) public {
+        adminMaster = msg.sender;
+        orgName = _orgName;
+        adminMap[msg.sender] = true;
+        adminLedger.push(msg.sender);
     }
 
     function createCertificate(
         string certificateId,
         string regNo,
         string studentName,
-        string _adminName,
+        string _orgName,
         string dateOfIssue,
         string description
-    ) public {
+    ) public restricted {
         bytes32 _hashValue = keccak256(
             abi.encodePacked(
                 certificateId,
                 regNo,
                 studentName,
-                _adminName,
+                _orgName,
                 dateOfIssue,
                 description
             )
@@ -49,7 +53,7 @@ contract Certificate {
         string certificateId,
         string regNo,
         string studentName,
-        string _adminName,
+        string _orgName,
         string dateOfIssue,
         string description
     ) public view returns (bool) {
@@ -58,7 +62,7 @@ contract Certificate {
                 certificateId,
                 regNo,
                 studentName,
-                _adminName,
+                _orgName,
                 dateOfIssue,
                 description
             )
@@ -70,7 +74,7 @@ contract Certificate {
         return _isValid;
     }
 
-    function revoke(string certificateId) public {
+    function revoke(string certificateId) public restricted {
         ledger[certificateId].isValid = false;
     }
 
@@ -78,7 +82,8 @@ contract Certificate {
         return ledger[certificateId].isValid;
     }
 
-    function getAdminDetails() public view returns (address, string) {
-        return (admin, adminName);
+    function addAdmin(address adminAddress) public restricted {
+        adminMap[adminAddress] = true;
+        adminLedger.push(adminAddress);
     }
 }
