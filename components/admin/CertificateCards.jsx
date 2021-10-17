@@ -38,7 +38,7 @@ const revoke = async (certificateId, refreshFunction, changeLoading) => {
 const CertificateCards = (props) => {
   const [loading, setLoading] = React.useState(false);
   const certificateDate = new Date(props.dateOfIssue);
-  const changeLoadingStatus = () => {
+  const  = () => {
     setLoading(!loading);
   };
   return (
@@ -79,7 +79,7 @@ const CertificateCards = (props) => {
           >
             <div
               className={`${
-                homestyles.loader - red
+                homestyles.loader_red
               } ease-linear rounded-full border-4 border-t-4 border-white h-8 w-8 mx-auto`}
             ></div>
           </div>

@@ -72,7 +72,7 @@
     animation        : spinner 1.5s linear infinite;
 }
 
-.loader-red {
+.loader_red {
     border-top-color : rgb(211, 30, 30);
     -webkit-animation: spinner 1.5s linear infinite;
     animation        : spinner 1.5s linear infinite;
