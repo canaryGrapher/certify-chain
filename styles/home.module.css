@@ -72,6 +72,12 @@
     animation        : spinner 1.5s linear infinite;
 }
 
+.loader-red {
+    border-top-color : rgb(211, 30, 30);
+    -webkit-animation: spinner 1.5s linear infinite;
+    animation        : spinner 1.5s linear infinite;
+}
+
 @-webkit-keyframes spinner {
     0% {
         -webkit-transform: rotate(0deg);

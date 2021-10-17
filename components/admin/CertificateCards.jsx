@@ -78,7 +78,9 @@ const CertificateCards = (props) => {
             className={`px-5 py-1 text-white ${styles.button} h-12 w-1/3 bg-red-400`}
           >
             <div
-              className={`${homestyles.loader} ease-linear rounded-full border-4 border-t-4 border-white h-8 w-8`}
+              className={`${
+                homestyles.loader - red
+              } ease-linear rounded-full border-4 border-t-4 border-white h-8 w-8 mx-auto`}
             ></div>
           </div>
         )}
