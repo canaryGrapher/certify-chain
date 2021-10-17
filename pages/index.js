@@ -1,14 +1,40 @@
 import React, { useEffect } from 'react';
 import web3 from '../ethereum/web3';
-import { getAdminDetails } from "../utilities/admin"
-import { useRouter } from 'next/router'
+import { getAdminDetails } from "../utilities/admin";
+import { useRouter } from 'next/router';
+import { verifyCert } from '../utilities/user';
 
 //importing stylesheets
 import styles from '../styles/home.module.css';
+const verifyCertificate = async (certificateId) => {
+    //1. Get certificate object from db
+    const response = await fetch(`/api/certificate/?type=view&certificateId=${certificateId}`);
+    const data = await response.json();
+    const certificateObj = data.message;
+    console.log(certificateObj);
+
+    //2. Invoke the smart contract
+    const status = await verifyCert(
+        certificateObj.certificateId,
+        certificateObj.regNo,
+        certificateObj.studentName,
+        certificateObj.organization,
+        certificateObj.dateOfIssue,
+        certificateObj.description
+    );
+
+    if(status === true){
+        alert("Certificated Authenticated!!");
+    }
+    else{
+        alert("Invalid certificate");
+    }
+}
 
 const Verify = () => {
     const router = useRouter();
     const [loaded, setLoaded] = React.useState(false);
+    const [certId, setCertId] = React.useState("");
     useEffect(() => {
         const getAccounts = async () => {
             if (window.ethereum) {
@@ -32,8 +58,8 @@ const Verify = () => {
                     <div className={`text-center w-screen min-h-screen text-gray-800 flex flex-col justify-center ${styles.body}`}>
                         <div className={`flex flex-col justify-center px-10 py-20 h-1/2 w-full md:w-2/3 mx-auto ${styles.card}`}>
                             <h2 className="mb-6 text-3xl font-medium">Verify your certificate</h2>
-                            <input type="text" placeholder="Certificate ID" className={`w-full md:w-1/2 mx-auto h-12 p-5 border-2 ${styles.input}`} />
-                            <button type="button" className={`mt-6 bg-blue-400 text-white w-full md:w-1/2 mx-auto h-12 ${styles.button}`}>Validate</button>
+                            <input type="text" placeholder="Certificate ID" value={certId} onChange={(e) => {setCertId(e.target.value)}}className={`w-full md:w-1/2 mx-auto h-12 p-5 border-2 ${styles.input}`} />
+                            <button type="button" className={`mt-6 bg-blue-400 text-white w-full md:w-1/2 mx-auto h-12 ${styles.button}`} onClick={() => verifyCertificate(certId)}>Validate</button>
                         </div>
                     </div>
                     <div className={`w-full ${styles.body}`}>

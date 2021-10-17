@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     // function to get user's details based on Wallet Address
     if (method === "GET") {
         try {
-            const { walletAddress, type } = req.query;
+            const { walletAddress, type,  certificateId} = req.query;
 
             // get all certificates issued to a user
             if (type === "owned") {
@@ -34,6 +34,10 @@ export default async function handler(req, res) {
                 else {
                     res.status(401).json({ success: false, message: "You are not an admin" });
                 }
+            }
+            else if(type === 'view') {
+                const certificate = await Certificate.findOne({certificateId: certificateId});
+                res.status(200).json({ success: true, message: certificate });
             }
 
             // send an error code of invalid type provided
