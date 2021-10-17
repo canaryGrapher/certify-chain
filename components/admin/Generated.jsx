@@ -21,7 +21,7 @@ const Generated = () => {
     };
 
     fetchCertificates();
-  }, [setRefresh]);
+  }, [refresh]);
 
   return (
     <React.Fragment>
