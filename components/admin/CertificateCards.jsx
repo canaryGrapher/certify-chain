@@ -58,9 +58,9 @@ const CertificateCards = (props) => {
         <p className="font-medium">{props.regNo}</p>
         <p className="font-medium">
           {certificateDate.getDate() +
-            "/" +
+            "-" +
             certificateDate.getMonth() +
-            "/" +
+            "-" +
             certificateDate.getFullYear()}
         </p>
       </div>
