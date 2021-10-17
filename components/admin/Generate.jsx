@@ -18,39 +18,49 @@ const Generate = () => {
     e.preventDefault();
     setLoading(true);
     const certificateId = uuid_v4();
-    const status = await createCertificate(
-      certificateId,
-      regNo,
-      name,
-      organization,
-      issueDate,
-      description
-    );
-    const wallet = await web3.eth.getAccounts();
 
-    if (status === true) {
-      const dataSubmit = await fetch(`/api/certificate`, {
-        method: "POST",
-        body: JSON.stringify({
-          studentName: name,
-          regNo: regNo,
-          dateOfIssue: issueDate,
-          description: description,
-          organization: organization,
-          walletAddress: wallet[0],
-          certificateId: certificateId,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const response = await dataSubmit.json();
-      console.log(response);
-      setLoading(false);
-    } else {
-      //Show error message indicating error due to web3/metamask
-      console.log("The certificate could not be generated!!");
+    try {
+      const status = await createCertificate(
+        certificateId,
+        regNo,
+        name,
+        organization,
+        issueDate,
+        description
+      );
+      const wallet = await web3.eth.getAccounts();
+      console.log(status);
+
+      if (status === true) {
+        const dataSubmit = await fetch(`/api/certificate`, {
+          method: "POST",
+          body: JSON.stringify({
+            studentName: name,
+            regNo: regNo,
+            dateOfIssue: issueDate,
+            description: description,
+            organization: organization,
+            walletAddress: wallet[0],
+            certificateId: certificateId,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const response = await dataSubmit.json();
+        console.log(response);
+        setLoading(false);
+      } else {
+        //Show error message indicating error due to web3/metamask
+        alert("The certificate could not be generated!!");
+      }
+      
+    } catch (err) {
+        alert(err.message);
+        console.log(err);
     }
+    setLoading(false);
+
   };
 
   return (
@@ -124,9 +134,9 @@ const Generate = () => {
           {!loading ? (
             "Issue Certificate"
           ) : (
-            <div class="flex justify-center items-center">
+            <div className="flex justify-center items-center">
               <div
-                class={`${homestyles.loader} ease-linear rounded-full border-4 border-t-4 border-white h-8 w-8`}
+                className={`${homestyles.loader} ease-linear rounded-full border-4 border-t-4 border-white h-8 w-8`}
               ></div>
             </div>
           )}

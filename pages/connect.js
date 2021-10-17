@@ -22,7 +22,7 @@ const Main = () => {
                 const response = await userDetails.json();
 
                 //check if the address is associated with any account on database
-                if (response.data.walletAddress === accounts[0]) {
+                if (response.data && response.data.walletAddress === accounts[0]) {
                     // redirect to admin dashboard if user is admin
                     if (response.data.admin) {
                         router.push("/admin");

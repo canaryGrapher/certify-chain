@@ -1,7 +1,32 @@
 import React from "react";
+import { revokeCertificate } from "../../utilities/admin";
 
 //importing stylesheets
 import styles from "./styles/CertificateCards.module.css";
+
+const revoke = async (certificateId) => {
+  //REvoke smart contract
+  try {
+    const status = await revokeCertificate(certificateId);
+
+    if(status === true){
+      const deleteCertificate = await fetch(`/api/certificate/?certificateId=${certificateId}`, {
+        method: "DELETE"
+      });
+
+      const response = await deleteCertificate.json();
+      if(response.success === true)
+        alert("Certificated successfully deleted and revoked!!");
+      else  
+        alert("Could not delete from db!");
+    }
+    else{
+      alert("Could not revoke Certificate!");
+    }
+  } catch (err) {
+      alert(err.message);
+  }
+}
 
 const CertificateCards = (props) => {
   const certificateDate = new Date(props.dateOfIssue);
@@ -20,6 +45,7 @@ const CertificateCards = (props) => {
         </button>
         <button
           className={`px-5 py-1 text-white ${styles.button}  h-12 w-1/3 bg-red-400`}
+          onClick={() => revoke(props.certificateId)}
         >
           Revoke
         </button>

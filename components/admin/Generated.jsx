@@ -12,8 +12,8 @@ const Generated =  () => {
       const data = await response.json();
       console.log(data.message);
       setInfo(data.message);
-      console.log(typeof info);
-      console.log(info.length);
+      // console.log(typeof info);
+      // console.log(info.length);
     };
 
     fetchCertificates();
