@@ -3,9 +3,11 @@ import { revokeCertificate } from "../../utilities/admin";
 
 //importing stylesheets
 import styles from "./styles/CertificateCards.module.css";
+import homestyles from "../../styles/home.module.css";
 
-const revoke = async (certificateId, refreshFunction) => {
+const revoke = async (certificateId, refreshFunction, changeLoading) => {
   //Revoke smart contract
+  changeLoading();
   try {
     const status = await revokeCertificate(certificateId);
 
@@ -30,10 +32,15 @@ const revoke = async (certificateId, refreshFunction) => {
   } catch (err) {
     alert("DD: " + err.message);
   }
+  changeLoading();
 };
 
 const CertificateCards = (props) => {
+  const [loading, setLoading] = React.useState(false);
   const certificateDate = new Date(props.dateOfIssue);
+  const changeLoadingStatus = () => {
+    setLoading(!loading);
+  };
   return (
     <div className={`bg-gray-100 w-100 my-5 p-5 rounded-lg ${styles.cards}`}>
       <div className="flex flex-row justify-between my-4 text-xl">
@@ -53,12 +60,28 @@ const CertificateCards = (props) => {
         >
           View
         </button>
-        <button
-          className={`px-5 py-1 text-white ${styles.button}  h-12 w-1/3 bg-red-400`}
-          onClick={() => revoke(props.certificateId, props.refreshFunction)}
-        >
-          Revoke
-        </button>
+        {!loading ? (
+          <button
+            className={`px-5 py-1 text-white ${styles.button}  h-12 w-1/3 bg-red-400`}
+            onClick={() =>
+              revoke(
+                props.certificateId,
+                props.refreshFunction,
+                changeLoadingStatus
+              )
+            }
+          >
+            Revoke
+          </button>
+        ) : (
+          <div
+            className={`px-5 py-1 text-white ${styles.button} h-12 w-1/3 bg-red-400`}
+          >
+            <div
+              className={`${homestyles.loader} ease-linear rounded-full border-4 border-t-4 border-white h-8 w-8`}
+            ></div>
+          </div>
+        )}
       </div>
     </div>
   );
