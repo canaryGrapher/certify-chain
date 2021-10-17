@@ -133,20 +133,23 @@ const Generate = () => {
             onChange={(e) => setDescription(e.target.value)}
           ></textarea>
         </div>
-        <button
-          type="submit"
-          className={`${homestyles.button} mx-auto h-10 w-full border-2 bg-green-400 border-green-400 hover:text-black hover:bg-white text-white`}
-        >
-          {!loading ? (
-            "Issue Certificate"
-          ) : (
-            <div className="flex justify-center items-center">
-              <div
-                className={`${homestyles.loader} ease-linear rounded-full border-4 border-t-4 border-white h-8 w-8`}
-              ></div>
-            </div>
-          )}
-        </button>
+
+        {!loading ? (
+          <button
+            type="submit"
+            className={`${homestyles.button} mx-auto h-10 w-full border-2 bg-green-400 border-green-400 hover:text-black hover:bg-white text-white`}
+          >
+            Issue Certificate
+          </button>
+        ) : (
+          <div
+            className={`flex justify-center items-center ${homestyles.button} mx-auto h-10 w-full border-2 bg-green-400 border-green-400`}
+          >
+            <div
+              className={`${homestyles.loader} ease-linear rounded-full border-4 border-t-4 border-white h-8 w-8 mx-auto`}
+            ></div>
+          </div>
+        )}
       </form>
     </React.Fragment>
   );
