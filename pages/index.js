@@ -7,29 +7,37 @@ import { verifyCert } from '../utilities/user';
 import styles from '../styles/home.module.css';
 
 const verifyCertificate = async (certificateId) => {
-    //1. Get certificate object from db
-    const response = await fetch(`/api/certificate/?type=view&certificateId=${certificateId}`);
-    const data = await response.json();
-    const certificateObj = data.message;
-    const gDate = new Date(certificateObj.dateOfIssue);
-    const certDate = gDate.getFullYear() + "-" + ("0" + (gDate.getMonth() + 1)).slice(-2) + "-" + ("0" + gDate.getDate()).slice(-2);
     
+    try {
+        //1. Get certificate object from db
+        const response = await fetch(`/api/certificate/?type=view&certificateId=${certificateId}`);
+        const data = await response.json();
 
-    //2. Invoke the smart contract
-    const status = await verifyCert(
-        String(certificateObj.certificateId),
-        String(certificateObj.regNo),
-        String(certificateObj.studentName),
-        String(certificateObj.organization),
-        String(certDate),
-        String(certificateObj.description)
-    );
-    
-    if(status === true){
-        alert("Certificated Authenticated!!");
-    }
-    else{
-        alert("Invalid certificate");
+        if(data.message === null)
+            throw("Invalid certificate Id!!");
+
+        const certificateObj = data.message;
+        const gDate = new Date(certificateObj.dateOfIssue);
+        const certDate = gDate.getFullYear() + "-" + ("0" + (gDate.getMonth() + 1)).slice(-2) + "-" + ("0" + gDate.getDate()).slice(-2);
+        
+        //2. Invoke the smart contract
+        const status = await verifyCert(
+            String(certificateObj.certificateId),
+            String(certificateObj.regNo),
+            String(certificateObj.studentName),
+            String(certificateObj.organization),
+            String(certDate),
+            String(certificateObj.description)
+        );
+        
+        if(status === true){
+            alert("Certificated Authenticated!!");
+        }
+        else{
+            throw("Invalid certificate!");
+        }
+    } catch (err) {
+        alert(err);
     }
 }
 
