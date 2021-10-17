@@ -12,7 +12,7 @@ const verifyCert = async (certificateId, regNo, studentName, adminName, dateOfIs
     const accounts = await web3.eth.getAccounts();
     
     const status = await certificate.methods.verify(certificateId, regNo, studentName, adminName, dateOfIssue, description)
-                    .send({from: accounts[0]});
+                    .call();
     return status;
 }
 

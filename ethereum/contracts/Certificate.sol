@@ -23,7 +23,7 @@ contract Certificate {
 
     function createCertificate(
         string certificateId,
-        uint256 regNo,
+        string regNo,
         string studentName,
         string _adminName,
         string dateOfIssue,
@@ -47,7 +47,7 @@ contract Certificate {
 
     function verify(
         string certificateId,
-        uint256 regNo,
+        string regNo,
         string studentName,
         string _adminName,
         string dateOfIssue,
@@ -70,7 +70,7 @@ contract Certificate {
         return _isValid;
     }
 
-    function revoke(string certificateId) public restricted {
+    function revoke(string certificateId) public {
         ledger[certificateId].isValid = false;
     }
 
