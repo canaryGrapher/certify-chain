@@ -25,7 +25,6 @@ const Generate = () => {
   const submitCertificate = async (e) => {
     e.preventDefault();
     setLoading(true);
-    alert("date: " + issueDate);
     const certificateId = uuid_v4();
     try {
       const status = await createCertificate(
