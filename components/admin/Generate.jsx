@@ -12,8 +12,11 @@ const Generate = () => {
   const [issueDate, setIssueDate] = React.useState("");
   const [organization, setOrganization] = React.useState("");
   const [description, setDescription] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
 
-  const submitCertificate = async () => {
+  const submitCertificate = async (e) => {
+    e.preventDefault();
+    setLoading(true);
     const certificateId = uuid_v4();
     const status = await createCertificate(
       certificateId,
@@ -43,6 +46,7 @@ const Generate = () => {
       });
       const response = await dataSubmit.json();
       console.log(response);
+      setLoading(false);
     } else {
       //Show error message indicating error due to web3/metamask
       console.log("The certificate could not be generated!!");
@@ -52,67 +56,82 @@ const Generate = () => {
   return (
     <React.Fragment>
       <h2 className="text-2xl font-medium">Issue a new certificate</h2>
-      <div className="grid grid-cols-2 gap-5">
+      <form onSubmit={submitCertificate}>
+        <div className="grid grid-cols-2 gap-5">
+          <div className="my-2 w-full">
+            <p className="mb-2 ml-3">Name of the user</p>
+            <input
+              required={true}
+              type="text"
+              placeholder="Name"
+              className={`w-full mx-auto h-12 p-5 border-2 ${homestyles.input}`}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div className="my-2 w-full">
+            <p className="mb-2 ml-3">Registration Number</p>
+            <input
+              required={true}
+              type="number"
+              placeholder="Registration number of the user"
+              className={`w-full mx-auto h-12 p-5 border-2 ${homestyles.input}`}
+              value={regNo}
+              onChange={(e) => setRegNo(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-5">
+          <div className="my-2 w-full">
+            <p className="mb-2 ml-3">Date of Issue</p>
+            <input
+              required={true}
+              type="date"
+              placeholder="Date of issue of certificate"
+              className={`w-full mx-auto h-12 p-5 border-2 ${homestyles.input}`}
+              value={issueDate}
+              onChange={(e) => setIssueDate(e.target.value)}
+            />
+          </div>
+          <div className="my-2 w-full">
+            <p className="mb-2 ml-3">Organization</p>
+            <input
+              required={true}
+              type="text"
+              placeholder="Name of issuing organization"
+              className={`w-full mx-auto h-12 p-5 border-2 ${homestyles.input}`}
+              value={organization}
+              onChange={(e) => setOrganization(e.target.value)}
+            />
+          </div>
+        </div>
         <div className="my-2 w-full">
-          <p className="mb-2 ml-3">Name of the user</p>
-          <input
+          <p className="mb-2 ml-3">Description</p>
+          <textarea
+            required={true}
             type="text"
-            placeholder="Name"
-            className={`w-full mx-auto h-12 p-5 border-2 ${homestyles.input}`}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+            rows={5}
+            placeholder="About the certificate"
+            className={`w-full mx-auto h-12 p-5 border-2 ${homestyles.textarea}`}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          ></textarea>
         </div>
-        <div className="my-2 w-full">
-          <p className="mb-2 ml-3">Registration Number</p>
-          <input
-            type="number"
-            placeholder="Registration number of the user"
-            className={`w-full mx-auto h-12 p-5 border-2 ${homestyles.input}`}
-            value={regNo}
-            onChange={(e) => setRegNo(e.target.value)}
-          />
-        </div>
-      </div>
-      <div className="grid grid-cols-2 gap-5">
-        <div className="my-2 w-full">
-          <p className="mb-2 ml-3">Date of Issue</p>
-          <input
-            type="date"
-            placeholder="Date of issue of certificate"
-            className={`w-full mx-auto h-12 p-5 border-2 ${homestyles.input}`}
-            value={issueDate}
-            onChange={(e) => setIssueDate(e.target.value)}
-          />
-        </div>
-        <div className="my-2 w-full">
-          <p className="mb-2 ml-3">Organization</p>
-          <input
-            type="text"
-            placeholder="Name of issuing organization"
-            className={`w-full mx-auto h-12 p-5 border-2 ${homestyles.input}`}
-            value={organization}
-            onChange={(e) => setOrganization(e.target.value)}
-          />
-        </div>
-      </div>
-      <div className="my-2 w-full">
-        <p className="mb-2 ml-3">Description</p>
-        <textarea
-          type="text"
-          rows={5}
-          placeholder="About the certificate"
-          className={`w-full mx-auto h-12 p-5 border-2 ${homestyles.textarea}`}
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        ></textarea>
-      </div>
-      <button
-        className={`${homestyles.button} mx-auto w-full border-2 bg-green-400 border-green-400 hover:text-black hover:bg-white text-white`}
-        onClick={() => submitCertificate()}
-      >
-        Issue Certificate
-      </button>
+        <button
+          type="submit"
+          className={`${homestyles.button} mx-auto h-10 w-full border-2 bg-green-400 border-green-400 hover:text-black hover:bg-white text-white`}
+        >
+          {!loading ? (
+            "Issue Certificate"
+          ) : (
+            <div class="flex justify-center items-center">
+              <div
+                class={`${homestyles.loader} ease-linear rounded-full border-4 border-t-4 border-white h-8 w-8`}
+              ></div>
+            </div>
+          )}
+        </button>
+      </form>
     </React.Fragment>
   );
 };

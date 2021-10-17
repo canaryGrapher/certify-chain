@@ -15,7 +15,7 @@ const Admin = () => {
     const [selectedTab, setSelectedTab] = React.useState("generated");
     const [admin, setAdmin] = React.useState(false);
     const tabOptionGenerated = selectedTab === 'generated' ? styles.active_tab : styles.inactive_tab;
-    const taOptionGenerate = selectedTab === 'generate' ? styles.active_tab : styles.inactive_tab;
+    const tabOptionGenerate = selectedTab === 'generate' ? styles.active_tab : styles.inactive_tab;
 
     React.useEffect(() => {
         const getAccounts = async () => {
@@ -33,7 +33,7 @@ const Admin = () => {
                 }
             } else {
                 console.log("No Metamask detected");
-                router.push("/");
+                router.push("/connect");
             }
         }
         getAccounts();
@@ -47,7 +47,7 @@ const Admin = () => {
                         <div className={`text-center my-auto bg-red-200 p-2 ${styles.tab} text-white ${tabOptionGenerated}`} onClick={() => setSelectedTab('generated')}>
                             <h1 className="text-lg font-medium">Issued Certificates</h1>
                         </div>
-                        <div className={`text-center my-auto bg-red-200 p-2 ${styles.tab} text-white ${taOptionGenerate}`} onClick={() => setSelectedTab('generate')}>
+                        <div className={`text-center my-auto bg-red-200 p-2 ${styles.tab} text-white ${tabOptionGenerate}`} onClick={() => setSelectedTab('generate')}>
                             <h1 className="text-lg font-medium">New Certificate</h1>
                         </div>
                     </div>
