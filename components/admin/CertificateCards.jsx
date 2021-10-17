@@ -5,9 +5,14 @@ import { revokeCertificate } from "../../utilities/admin";
 import styles from "./styles/CertificateCards.module.css";
 import homestyles from "../../styles/home.module.css";
 
-const revoke = async (certificateId, refreshFunction, changeLoading) => {
+const revoke = async (
+  certificateId,
+  refreshFunction,
+  openLoading,
+  closeLoading
+) => {
   //Revoke smart contract
-  changeLoading();
+  openLoading();
   try {
     const status = await revokeCertificate(certificateId);
 
@@ -32,14 +37,17 @@ const revoke = async (certificateId, refreshFunction, changeLoading) => {
   } catch (err) {
     alert("DD: " + err.message);
   }
-  changeLoading();
+  closeLoading();
 };
 
 const CertificateCards = (props) => {
   const [loading, setLoading] = React.useState(false);
   const certificateDate = new Date(props.dateOfIssue);
-  const  = () => {
-    setLoading(!loading);
+  const closeLoading = () => {
+    setLoading(false);
+  };
+  const openLoading = () => {
+    setLoading(true);
   };
   return (
     <div className={`bg-gray-100 w-100 my-5 p-5 rounded-lg ${styles.cards}`}>
@@ -67,7 +75,8 @@ const CertificateCards = (props) => {
               revoke(
                 props.certificateId,
                 props.refreshFunction,
-                changeLoadingStatus
+                openLoading,
+                closeLoading
               )
             }
           >
@@ -78,9 +87,7 @@ const CertificateCards = (props) => {
             className={`px-5 py-1 text-white ${styles.button} h-12 w-1/3 bg-red-400`}
           >
             <div
-              className={`${
-                homestyles.loader_red
-              } ease-linear rounded-full border-4 border-t-4 border-white h-8 w-8 mx-auto`}
+              className={`${homestyles.loader_red} ease-linear rounded-full border-4 border-t-4 border-white h-8 w-8 mx-auto`}
             ></div>
           </div>
         )}
