@@ -13,12 +13,14 @@ const fetchUserDetails = async (userWallet) => {
   return details.data;
 };
 
-const fetchUserCertificates = async(walletAddress) => {
-  const response = await fetch(`/api/certificate/?walletAddress=${walletAddress}&type=owned`);
+const fetchUserCertificates = async (walletAddress) => {
+  const response = await fetch(
+    `/api/certificate/?walletAddress=${walletAddress}&type=owned`
+  );
   const data = await response.json();
   console.log(data.message);
   return data.message;
-}
+};
 
 const User = () => {
   const [userWallet, setUserWallet] = React.useState("");
@@ -43,12 +45,18 @@ const User = () => {
   return (
     <React.Fragment>
       <h1 className="text-3xl">{userName}</h1>
-      <p className="text-lg text-gray-400">{userWallet.slice(0, 6) + ".." + userWallet.slice(-5)}</p>
+      <p className="text-lg text-gray-400">
+        {userWallet.slice(0, 6) + ".." + userWallet.slice(-5)}
+      </p>
       <p>{regNo}</p>
       <div className="mt-10">
-        {info.map((item) => (
-          <CertificateComponent {...item} />
-        ))}
+        {info.length === 0 ? (
+          <div className="h-12 flex flex-col justify-center text-center">
+            <p>No certificates yet</p>
+          </div>
+        ) : (
+          info.map((item) => <CertificateComponent {...item} />)
+        )}
       </div>
     </React.Fragment>
   );
