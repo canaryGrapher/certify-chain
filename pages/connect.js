@@ -1,6 +1,5 @@
 import React from 'react';
 import web3 from '../ethereum/web3';
-import { getAdminDetails } from "../utilities/admin"
 import { useRouter } from 'next/router'
 
 
@@ -62,12 +61,4 @@ const Main = () => {
 
 export default Main;
 
-export async function getStaticProps() {
-    const adminDetails = await getAdminDetails();
-    const adminAddress = await adminDetails[0];
-    const adminName = await adminDetails[1];
-    return {
-        props: { adminName, adminAddress }, // will be passed to the page component as props
-    }
-}
 

@@ -1,11 +1,6 @@
 import certificate from '../ethereum/certificate_instance';
 import web3 from '../ethereum/web3';
 
-const getAdminDetails = async () => {
-    const adminAddress = await certificate.methods.getAdminDetails().call();
-    return adminAddress;
-};
-
 const revokeCertificate = async (certificateId) => {
     const accounts = await web3.eth.getAccounts();
     
@@ -31,4 +26,4 @@ const createCertificate = async (certificateId, regNo, studentName, adminName, d
     return status;
 }
 
-export { getAdminDetails, revokeCertificate, createCertificate};
+export { revokeCertificate, createCertificate};

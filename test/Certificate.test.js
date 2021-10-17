@@ -24,7 +24,7 @@ describe('Certificate', () => {
     it('only allows the admin to create certificate', async () => {
 
         try{
-            await certificate.methods.createCertificate("1", 180905576, "Jatin", "MAHE", "18-05-2000", "grade sheet")
+            await certificate.methods.createCertificate("1", "180905576", "Jatin", "MAHE", "18-05-2000", "grade sheet")
                 .send({from: accounts[1], gas: '1000000'});
 
         } catch (err){
@@ -37,7 +37,7 @@ describe('Certificate', () => {
 
 
     it('successfully approves certificate creation', async () => {
-        await certificate.methods.createCertificate("1", 180905576, "Jatin", "MAHE", "18-05-2000", "grade sheet")
+        await certificate.methods.createCertificate("1", "180905576", "Jatin", "MAHE", "18-05-2000", "grade sheet")
             .send({from: accounts[0], gas: '1000000'});
 
         const status = await certificate.methods.certificateStatus("1").call();
@@ -47,18 +47,18 @@ describe('Certificate', () => {
 
 
     it('admin issues certificate and a third-party verifies it', async () => {
-        await certificate.methods.createCertificate("1", 180905576, "Jatin", "MAHE", "18-05-2000", "grade sheet")
+        await certificate.methods.createCertificate("1", "180905576", "Jatin", "MAHE", "18-05-2000", "grade sheet")
             .send({from: accounts[0], gas: '1000000'});
 
-        const status = await certificate.methods.verify("1", 180905576, "Jatin", "MAHE", "18-05-2000", "grade sheet")
-            .send({from: accounts[1], gas: '1000000'});
+        const status = await certificate.methods.verify("1", "180905576", "Jatin", "MAHE", "18-05-2000", "grade sheet")
+            .call();
 
         assert(status);
     });
 
 
     it('revokes the validity of a certificate', async () => {
-        await certificate.methods.createCertificate("1", 180905576, "Jatin", "MAHE", "18-05-2000", "grade sheet")
+        await certificate.methods.createCertificate("1", "180905576", "Jatin", "MAHE", "18-05-2000", "grade sheet")
             .send({from: accounts[0], gas: '1000000'});
 
         await certificate.methods.revoke("1").send({from: accounts[0], gas: '1000000'});
@@ -69,10 +69,10 @@ describe('Certificate', () => {
     });
 
     it('creates multiple certificates', async () => {
-        await certificate.methods.createCertificate("1", 180905576, "Jatin", "MAHE", "18-05-2000", "grade sheet")
+        await certificate.methods.createCertificate("1", "180905576", "Jatin", "MAHE", "18-05-2000", "grade sheet")
             .send({from: accounts[0], gas: '1000000'});
 
-        await certificate.methods.createCertificate("2", 180903276, "Yash", "MAHE", "20-05-2000", "grade sheet")
+        await certificate.methods.createCertificate("2", "180903276", "Yash", "MAHE", "20-05-2000", "grade sheet")
             .send({from: accounts[0], gas: '1000000'});   
 
  
@@ -82,14 +82,7 @@ describe('Certificate', () => {
         assert(status1 && status2);
     });
 
-    it('gets admin', async () => {
-        try{
-            const details = await certificate.methods.getAdminDetails().call();
-            console.log(details);
-        } catch(err){
 
-        }
-    });
 });
 
 
