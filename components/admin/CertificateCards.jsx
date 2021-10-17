@@ -6,10 +6,11 @@ import styles from "./styles/CertificateCards.module.css";
 
 const revoke = async (certificateId) => {
   //REvoke smart contract
+  // alert("here");
   try {
     const status = await revokeCertificate(certificateId);
-
-    if(status === true){
+    // alert("status: " + status);
+    if(status === false){
       const deleteCertificate = await fetch(`/api/certificate/?certificateId=${certificateId}`, {
         method: "DELETE"
       });
@@ -24,7 +25,7 @@ const revoke = async (certificateId) => {
       alert("Could not revoke Certificate!");
     }
   } catch (err) {
-      alert(err.message);
+      alert("DD: " + err.message);
   }
 }
 

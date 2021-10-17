@@ -13,7 +13,7 @@ const revokeCertificate = async (certificateId) => {
     await certificate.methods.revoke(certificateId).send({from: accounts[0]});
 
     //Check the status for confirmation
-    const status = await certificate.methods.certificateStatus(certificate).call();
+    const status = await certificate.methods.certificateStatus(certificateId).call();
 
     //Update the value of status on mongoDb, and update the ui to show certificate revoked
     return status;
