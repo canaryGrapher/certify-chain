@@ -26,7 +26,7 @@ export default async function handler(req, res) {
 
                 //if the user is an admin
                 if (user.admin) {
-                    const certificates = await Certificate.find({ adminAddress: walletAddress });
+                    const certificates = await Certificate.find();
                     res.status(200).json({ success: true, message: certificates });
                 }
 
