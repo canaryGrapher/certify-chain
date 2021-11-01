@@ -1,5 +1,19 @@
 pragma solidity ^0.4.26;
 
+contract certificateFactory {
+    
+    address[] public deployedInstances;
+    
+    function createCertificateInstance(string orgName) public {
+        address newCertificateInstance = new Certificate(orgName, msg.sender);
+        deployedInstances.push(newCertificateInstance);
+    }
+    
+    function getDeployedInstances() public view returns(address[]) {
+        return deployedInstances;
+    }
+}
+
 contract Certificate {
 
     struct Cert {
@@ -12,17 +26,17 @@ contract Certificate {
     address[] public adminLedger;
     address public adminMaster;
     string public orgName;
-
+ 
     modifier restricted() {
         require(adminMap[msg.sender] == true);
         _;
     }
 
-    constructor(string _orgName) public {
-        adminMaster = msg.sender;
+    constructor(string _orgName, address creator) public {
+        adminMaster = creator;
         orgName = _orgName;
-        adminMap[msg.sender] = true;
-        adminLedger.push(msg.sender);
+        adminMap[creator] = true;
+        adminLedger.push(creator);
     }
 
     function createCertificate(
@@ -56,7 +70,7 @@ contract Certificate {
         string _orgName,
         string dateOfIssue,
         string description
-    ) public view returns (bool) {
+    ) public  view returns (bool) {
         bytes32 _hashValue = keccak256(
             abi.encodePacked(
                 certificateId,
