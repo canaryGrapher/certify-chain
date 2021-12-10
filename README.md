@@ -20,7 +20,7 @@
 
 <br>
 
-# Certify Chain 2.0
+# Certify Chain 2.0 (In progress)
 
 # The idea
 There is one parent smart contract which can be used to generate a child smart contract for every new organization that joins the network. 
