@@ -3,8 +3,8 @@ const Web3 = require("web3");
 const compiledFactory = require('./build/Certificate.json');
 
 const provider = new HDWalletProvider(
-  'denial hour again eternal west speak device supply behave describe agent until', //Paste your metamask neumonic here
-  'https://rinkeby.infura.io/v3/29007437e80a4914bfbadfd25ad2eced'   //Paste your infura API here
+  '', //Paste your metamask neumonic here
+  ''   //Paste your infura API here
 );
 
 const web3 = new Web3(provider);
